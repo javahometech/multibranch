@@ -1,11 +1,13 @@
 pipeline{
-	agent { label 'master'}
-  stages{
-    stage('SCM'){
-	    steps{
-	    git branch: 'master',
-	        url: 'https://github.com/javahometech/multibranch'
-	    }
+    agent { label 'master'}
+    tools {
+        maven 'maven3'
     }
-  }
+    stages{
+        stage('Maven Build'){
+            steps{
+                sh "mvn clean package"
+            }
+        }
+    }
 }
