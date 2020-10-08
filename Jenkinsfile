@@ -3,7 +3,7 @@ pipeline{
   stages{
     stage('SCM'){
 	    steps{
-	    git branch: 'main',
+	    git branch: 'master',
 	        url: 'https://github.com/javahometech/multibranch'
 	    }
     }
