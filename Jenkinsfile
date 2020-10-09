@@ -17,16 +17,17 @@ pipeline{
                 branch 'develop'
             }
             steps{
+                def pom = readMavenPom file: 'pom.xml'
                 nexusArtifactUploader artifacts: [
                         [artifactId: 'multibranch', classifier: '', file: 'target/multibranch.war', type: 'war']
                     ], 
                     credentialsId: 'nexus3', 
-                    groupId: 'in.javahome', 
+                    groupId: pom.groupId, 
                     nexusUrl: '172.31.70.16:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'javahome-app', 
-                    version: '2.0'
+                    version: pom.version
             }
         }
 
