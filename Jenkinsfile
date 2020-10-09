@@ -17,8 +17,9 @@ pipeline{
                 branch 'develop'
             }
             steps{
-                def pom = readMavenPom file: 'pom.xml'
-                nexusArtifactUploader artifacts: [
+                script{
+                    def pom = readMavenPom file: 'pom.xml'
+                    nexusArtifactUploader artifacts: [
                         [artifactId: 'multibranch', classifier: '', file: 'target/multibranch.war', type: 'war']
                     ], 
                     credentialsId: 'nexus3', 
@@ -28,6 +29,7 @@ pipeline{
                     protocol: 'http', 
                     repository: 'javahome-app', 
                     version: pom.version
+                }
             }
         }
 
