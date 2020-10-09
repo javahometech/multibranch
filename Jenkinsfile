@@ -26,7 +26,7 @@ pipeline{
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: 'javahome-app', 
-                    version: '1.0'
+                    version: '2.0'
             }
         }
 
