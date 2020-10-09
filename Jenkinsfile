@@ -25,7 +25,7 @@ pipeline{
                     nexusUrl: '172.31.70.16:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
-                    repository: 'http://3.209.82.68:8081/repository/javahome-app/', 
+                    repository: 'javahome-app', 
                     version: '1.0'
             }
         }
