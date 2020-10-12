@@ -6,7 +6,7 @@
 
   <groupId>in.javahome</groupId>
   <artifactId>multibranch</artifactId>
-  <version>4.0-SNAPSHOT</version>
+  <version>4.0</version>
   <packaging>war</packaging>
 
   <name>multibranch Maven Webapp</name>
