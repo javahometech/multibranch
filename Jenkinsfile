@@ -19,6 +19,7 @@ pipeline{
             steps{
                 script{
                     def pom = readMavenPom file: 'pom.xml'
+                    def repository = pom.version.endsWith('SNAPSHOT') ? 'javahome-app-snapshot' : 'javahome-app'
                     nexusArtifactUploader artifacts: [
                         [artifactId: 'multibranch', classifier: '', file: 'target/multibranch.war', type: 'war']
                     ], 
@@ -27,7 +28,7 @@ pipeline{
                     nexusUrl: '172.31.70.16:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
-                    repository: 'javahome-app', 
+                    repository: repository, 
                     version: pom.version
                 }
             }
