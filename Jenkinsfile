@@ -17,7 +17,20 @@ pipeline{
                 branch 'develop'
             }
             steps{
-                echo "coming soon.."
+                script{
+                    def pom = readMavenPom file: 'pom.xml'
+                    def repository = pom.version.endsWith('SNAPSHOT') ? 'javahome-app-snapshot' : 'javahome-app'
+                    nexusArtifactUploader artifacts: [
+                        [artifactId: 'multibranch', classifier: '', file: 'target/multibranch.war', type: 'war']
+                    ], 
+                    credentialsId: 'nexus3', 
+                    groupId: pom.groupId, 
+                    nexusUrl: '172.31.70.16:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: repository, 
+                    version: pom.version
+                }
             }
         }
 
@@ -26,7 +39,11 @@ pipeline{
                 branch 'develop'
             }
             steps{
-                echo "coming soon.."
+                sshagent(['dev-tomcat']) {
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.80.188 /opt/tomcat8/bin/shutdown.sh"
+                    sh "scp target/multibranch.war ec2-user@172.31.80.188:/opt/tomcat8/webapps/"
+                    sh "ssh ec2-user@172.31.80.188 /opt/tomcat8/bin/startup.sh"
+                }
             }
         }
 
@@ -35,7 +52,11 @@ pipeline{
                 branch 'release'
             }
             steps{
-                echo "coming soon.."
+                sshagent(['dev-tomcat']) {
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.89.39 /opt/tomcat8/bin/shutdown.sh"
+                    sh "scp target/multibranch.war ec2-user@172.31.89.39:/opt/tomcat8/webapps/"
+                    sh "ssh ec2-user@172.31.89.39 /opt/tomcat8/bin/startup.sh"
+                }
             }
         }
 
