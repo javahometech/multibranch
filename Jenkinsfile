@@ -39,7 +39,11 @@ pipeline{
                 branch 'develop'
             }
             steps{
-                echo "coming soon.."
+                sshagent(['dev-tomcat']) {
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@172.31.80.188 /opt/tomcat8/bin/shutdown.sh"
+                    sh "scp target/multibranch.war ec2-user@172.31.80.188:/opt/tomcat8/webapps/"
+                    sh "ssh ec2-user@172.31.80.188 /opt/tomcat8/bin/startup.sh"
+                }
             }
         }
 
