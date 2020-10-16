@@ -12,6 +12,13 @@ pipeline{
                 sh "mvn clean package"
             }
         }
+        stage("Sonar Analysis"){
+            steps{
+                withSonarQubeEnv('sonar7') {
+                 sh 'mvn clean package sonar:sonar'
+              }
+            }
+        }
         stage('Upload to Nexus'){
             when {
                 branch 'develop'
