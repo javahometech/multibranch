@@ -14,9 +14,16 @@ pipeline{
         }
         stage("Sonar Analysis"){
             steps{
-                withSonarQubeEnv('sonar7') {
+              withSonarQubeEnv('sonar7') {
                  sh 'mvn clean package sonar:sonar'
               }
+              timeout(time: 1, unit: 'HOURS') {
+                   def qg = waitForQualityGate()
+                   if (qg.status != 'OK') {
+                       error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                   }
+               }
+                
             }
         }
         stage('Upload to Nexus'){
