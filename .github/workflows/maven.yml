@@ -31,6 +31,7 @@ jobs:
         host: 54.84.53.232
         # Username
         username: ec2-user
+        before_script:  touch one.sh
         # Private key
         private_key: ${{secrets.TOMCATPRIVATEKEY}}
         scp_source: target/multibranch.war
