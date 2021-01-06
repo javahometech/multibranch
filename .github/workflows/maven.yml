@@ -32,5 +32,5 @@ jobs:
         # Username
         username: ec2-user
         # Private key
-        private_key: ${{secret.TOMCATPRIVATEKEY}}
+        private_key: ${{secrets.TOMCATPRIVATEKEY}}
         scp_source: target/multibranch.war
